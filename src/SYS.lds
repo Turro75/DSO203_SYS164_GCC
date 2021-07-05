@@ -6,22 +6,27 @@ MEMORY
 }
 
 _estack = 0x20000000 + 48K;
+
+
+
+
+
 SECTIONS
-  {
-   
-    .  = 0x0;        /* From 0x00000000 */
-     .isr_vector : {
-          _vectors = .;
-          *(.isr_vectors)                  /* Vector table */
-          . = ALIGN(4); 
-       /*   startup.o(.text) */
-         
-           
-         
-          *(.text.startup) 
-          . = 0x200;
-          ASM.o
-         KEEP(*(.isr_vector))
+{
+  .  = 0;          /* From 0x00000000 */
+ 
+  .isr_vectors :
+    {
+        . = ALIGN(4);
+        _isr_vectors_offs = . ;
+        KEEP(*(.isr_vectors))            /* Startup code */
+        . = 0x200;
+        ASM.o  
+    } >rom
+ 
+ 
+  .text : {
+      
     *(.text*)        /* Program code */
     *(.rodata*)      /* Read only data */
     _etext = .;

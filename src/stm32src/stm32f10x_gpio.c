@@ -50,48 +50,46 @@
 *******************************************************************************/
 void GPIO_DeInit(GPIO_TypeDef* GPIOx)
 {
-  /* Check the parameters */
+/* Check the parameters */
   assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
   
-  switch (*(u32*)&GPIOx)
+  if (GPIOx == GPIOA)
   {
-    case GPIOA_BASE:
-      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOA, ENABLE);
-      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOA, DISABLE);
-      break;
-
-    case GPIOB_BASE:
-      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOB, ENABLE);
-      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOB, DISABLE);
-      break;
-
-    case GPIOC_BASE:
-      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOC, ENABLE);
-      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOC, DISABLE);
-      break;
-
-    case GPIOD_BASE:
-      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOD, ENABLE);
-      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOD, DISABLE);
-      break;
-      
-    case GPIOE_BASE:
-      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOE, ENABLE);
-      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOE, DISABLE);
-      break; 
-
-    case GPIOF_BASE:
-      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOF, ENABLE);
-      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOF, DISABLE);
-      break;
-
-    case GPIOG_BASE:
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOA, ENABLE);
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOA, DISABLE);
+  }
+  else if (GPIOx == GPIOB)
+  {
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOB, ENABLE);
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOB, DISABLE);
+  }
+  else if (GPIOx == GPIOC)
+  {
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOC, ENABLE);
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOC, DISABLE);
+  }
+  else if (GPIOx == GPIOD)
+  {
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOD, ENABLE);
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOD, DISABLE);
+  }    
+  else if (GPIOx == GPIOE)
+  {
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOE, ENABLE);
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOE, DISABLE);
+  } 
+  else if (GPIOx == GPIOF)
+  {
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOF, ENABLE);
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOF, DISABLE);
+  }
+  else
+  {
+    if (GPIOx == GPIOG)
+    {
       RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOG, ENABLE);
       RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOG, DISABLE);
-      break;                       
-
-    default:
-      break;
+    }
   }
 }
 

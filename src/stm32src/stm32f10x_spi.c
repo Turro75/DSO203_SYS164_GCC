@@ -52,24 +52,22 @@
 *******************************************************************************/
 void SPI_DeInit(SPI_TypeDef* SPIx)
 {
-  switch (*(u32*)&SPIx)
+  /* Check the parameters */
+  assert_param(IS_SPI_ALL_PERIPH(SPIx));
+
+  if (SPIx == SPI1)
   {
-    case SPI1_BASE:
-      /* Enable SPI1 reset state */
-      RCC_APB2PeriphResetCmd(RCC_APB2Periph_SPI1, ENABLE);
-      /* Release SPI1 from reset state */
-      RCC_APB2PeriphResetCmd(RCC_APB2Periph_SPI1, DISABLE);
-      break;
-
-    case SPI2_BASE:
-      /* Enable SPI2 reset state */
-      RCC_APB1PeriphResetCmd(RCC_APB1Periph_SPI2, ENABLE);
-      /* Release SPI2 from reset state */
-      RCC_APB1PeriphResetCmd(RCC_APB1Periph_SPI2, DISABLE);
-      break;
-
-    default:
-      break;
+    /* Enable SPI1 reset state */
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_SPI1, ENABLE);
+    /* Release SPI1 from reset state */
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_SPI1, DISABLE);
+  }
+  else if (SPIx == SPI2)
+  {
+    /* Enable SPI2 reset state */
+    RCC_APB1PeriphResetCmd(RCC_APB1Periph_SPI2, ENABLE);
+    /* Release SPI2 from reset state */
+    RCC_APB1PeriphResetCmd(RCC_APB1Periph_SPI2, DISABLE);
   }
 }
 
@@ -231,7 +229,7 @@ void SPI_ITConfig(SPI_TypeDef* SPIx, u8 SPI_IT, FunctionalState NewState)
 
 /*******************************************************************************
 * Function Name  : SPI_DMACmd
-* Description    : Enables or disables the SPIx’s DMA interface.
+* Description    : Enables or disables the SPIxï¿½s DMA interface.
 * Input          : - SPIx: where x can be 1 or 2 to select the SPI peripheral.
 *                  - SPI_DMAReq: specifies the SPI DMA transfer request to be
 *                    enabled or disabled. 
@@ -606,7 +604,7 @@ ITStatus SPI_GetITStatus(SPI_TypeDef* SPIx, u8 SPI_IT)
 
 /*******************************************************************************
 * Function Name  : SPI_ClearITPendingBit
-* Description    : Clears the SPIx’s interrupt pending bits.
+* Description    : Clears the SPIxï¿½s interrupt pending bits.
 * Input          : - SPIx: where x can be 1 or 2 to select the SPI peripheral.
 *                  - SPI_IT: specifies the SPI interrupt pending bit to clear.
 *                    This parameter can be one of the following values:

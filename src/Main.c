@@ -61,7 +61,7 @@ SYS V1.64  SYS解锁程序
            即是36长度,STANDARD_INQUIRY_DATA_LEN = 0x24 USB_scis.c     
 *******************************************************************************/
 
-uc8  SYS_Ver[5]  = "1.64"; 
+uc8  SYS_Ver[5]  = "GCC"; 
 
 /*******************************************************************************
   main : Main routine.
@@ -94,13 +94,13 @@ int main(void)
     Display_Logo(70,150);
   }
 //=================================================================  
-  Display_Str( 5*8, 90, GRN, PRN,  "Hardware Ver " );
+  Display_Str( 5*8, 90, GRN, PRN,  (u8*)("Hardware Ver ") );
   Display_Str(18*8, 90, GRN, PRN,  (u8*)Get(HDWVER, 0));
-  Display_Str(25*8, 90, GRN, PRN, "Serial No: ");
+  Display_Str(25*8, 90, GRN, PRN, (u8*)("Serial No: "));
   Word2Hex(NumStr, __Dev_SN());            
   Display_Str(36*8, 90, YEL, PRN, NumStr);            // 显示读取到的设备序列号
 
-  Display_Str( 6*8, 70, GRN, PRN, "     DS203 Mini DSO SYS Ver            ");
+  Display_Str( 6*8, 70, GRN, PRN, (u8*)("     DS203 Mini DSO SYS Ver            "));
   Display_Str(34*8, 70, GRN, PRN, (u8*)Get(SYSVER, 0)); // 显示SYS固件版本号
 //---add----------------------------------------------------------------------//
   Init_Fat_Value();
@@ -109,17 +109,17 @@ int main(void)
     Key_Buffer = 0;                             // 清除按键状态，开始等待新的按键
     Licence = Get_Lic(SYS_LIC_OFFSET);          // Get master licence
     if((__Chk_SYS(Licence)!= 1) && (memcmp(Prt,"V3.15",5) < 0)){  // No master licence 
-      Display_Str(6*8,50,GRN,PRN,     "Please input master licence: 00000000");
+      Display_Str(6*8,50,GRN,PRN,     (u8*)"Please input master licence: 00000000");
       Licence = Input_Lic(48+29*8, 50);         // Input Licence
       if(__Chk_SYS(Licence)!= 1){               // Licence error
-        Display_Str(6*8,50,YEL,PRN,   "        Licence input error          ");
+        Display_Str(6*8,50,YEL,PRN,   (u8*)"        Licence input error          ");
       } else {                                  // Licence ok
         if(Add_Lic(Licence, SYS_LIC_OFFSET)== 1)// Licence writen ok
-          Display_Str(6*8,50,GRN,PRN, "         Licence writen ok           ");
+          Display_Str(6*8,50,GRN,PRN, (u8*)"         Licence writen ok           ");
         else  
-          Display_Str(6*8,50,GRN,PRN, "        Licence writen error         ");
+          Display_Str(6*8,50,GRN,PRN, (u8*)"        Licence writen error         ");
       }
-      Display_Str(6*8,30,GRN,PRN,     "      Push any key to next step      ");
+      Display_Str(6*8,30,GRN,PRN,     (u8*)"      Push any key to next step      ");
       while (Key_Buffer == 0){};
     }
     JumpAddr = *(vu32*) (APP1_BASE + 4);

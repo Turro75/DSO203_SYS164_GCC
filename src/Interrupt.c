@@ -106,12 +106,12 @@ void DMA1_Channel7_IRQHandler(void)
 void ADC1_2_IRQHandler(void)
 {}
 
-void USB_HP_CAN_TX_IRQHandler(void)
+void USB_HP_CAN1_TX_IRQHandler(void)
 {
   CTR_HP();
 }
 
-void USB_LP_CAN_RX0_IRQHandler(void)
+void USB_LP_CAN1_RX0_IRQHandler(void)
 {
   USB_Istr();
 }

@@ -145,7 +145,7 @@ u32 Input_Lic(u16 x0, u8 y0) // Return: 32Bits Lic
 {
   u8  i=0, j, n[2]={"0"};
   u32 Lic=0;
-  u8  NumStr[9], Type;
+  u8  NumStr[9], Type = 0;
   
   Word2Hex(NumStr, Lic);
   Display_Str(x0, y0, WHT, PRN, NumStr);
@@ -154,7 +154,7 @@ u32 Input_Lic(u16 x0, u8 y0) // Return: 32Bits Lic
     Word2Hex(NumStr, Lic);
     if( Type != Twink ){  // Blink current number each 0.5 Sec.
       Type = Twink;
-      for(j=0; j<8; ++j){ // Ë¢ÐÂÏÔÊ¾8Î»Êý×Ö£¬µ±Ç°Î»ÉÁË¸
+      for(j=0; j<8; ++j){ // Ë¢ï¿½ï¿½ï¿½ï¿½Ê¾8Î»ï¿½ï¿½ï¿½Ö£ï¿½ï¿½ï¿½Ç°Î»ï¿½ï¿½Ë¸
         n[0] = NumStr[j];
         if(i==j) Display_Str(j*8+ x0, y0, WHT, Type, n);
         else     Display_Str(j*8+ x0, y0, WHT, PRN,  n);

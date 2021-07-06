@@ -451,7 +451,7 @@ u16 Get_TAB_8x14(u8 Code, u16 Row)
   return Char_TAB_8x14[((Code-0x22)*8)+Row];
 }
 
-void Display_Str(u16 x0, u16 y0, u16 Color, u8 Mode, const char *s)
+void Display_Str(u16 x0, u16 y0, u16 Color, u8 Mode, const unsigned char *s)
 { 
   signed short i, j, b; 
   Point_SCR(x0, y0);

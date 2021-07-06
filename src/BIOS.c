@@ -15,10 +15,10 @@ u8  DFU_Ver[6] = "V3.10";
 u8   VerStr[8];
 u8   Clash = 0;
 
-const G_attr G_ATTR[1] =//LCD_X;LCD_Y;Yp_Max;Xp_Max;Tg_Num;Yv_Max;Xt_Max
+const G_attr G_ATTR[1] = {//LCD_X;LCD_Y;Yp_Max;Xp_Max;Tg_Num;Yv_Max;Xt_Max
                        {  400,   240,   8-1,    22-1,   15,     200,    4096,  
                         //Co_Max;Ya_Num;Yd_Num;INSERT;KpA1;KpA2;KpB1;KpB2
-                           1,     1,     1,     17,    0,   1024,  0, 1024};
+                           1,     1,     1,     17,    0,   1024,  0, 1024} };
 
 const Y_attr Y_ATTR[9] ={//  STR     KA1    KA2    KB1    KB2     SCALE 
                          { "50mV",    0,   1024,    0,   1024,    2000},
@@ -72,7 +72,7 @@ const T_attr T_ATTR[32] ={
   {">TH",  0, 0x19},{">TH",  1, 0x1B},{">TH",  2, 0x1D},{">TH",  3, 0x1F}};  
 
 /*******************************************************************************
- Set:  Ó²¼þ¿ØÖÆÉè±¸ÉèÖÃ
+ Set:  Ó²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½ï¿½ï¿½
 *******************************************************************************/
 u32 Set(u8 Object, u32 Value)
 {
@@ -170,12 +170,12 @@ u32 Set(u8 Object, u32 Value)
   case STANDBY:     if(Value == 1) { STB_EN();}  else { STB_DN();}   
                     break;
                     
-  case FPGA_RST:    GPIOB_CRH &= 0xF0FFFFFF;  GPIOB_CRH |= 0x01000000;        // ÉèPB14ÎªÊä³ö×´Ì¬
+  case FPGA_RST:    GPIOB_CRH &= 0xF0FFFFFF;  GPIOB_CRH |= 0x01000000;        // ï¿½ï¿½PB14Îªï¿½ï¿½ï¿½×´Ì¬
                     SPI_CRST_LOW(); Delayms(1);   // SPI_CRST_LOW 1mS
                     SPI_SS_HIGH(); Delayms(1);     // SPI_SS_HIGH  1mS
                     SPI_SS_LOW(); Delayms(1);      // SPI_SS_LOW   1mS
                     SPI_CRST_HIGH(); Delayms(2);   // SPI_CRST_HIGH 2mS
-                    GPIOB_CRH &= 0xF0FFFFFF;  GPIOB_CRH |= 0x08000000; break; // ÉèPB14ÎªÊäÈë×´Ì¬ 
+                    GPIOB_CRH &= 0xF0FFFFFF;  GPIOB_CRH |= 0x08000000; break; // ï¿½ï¿½PB14Îªï¿½ï¿½ï¿½ï¿½×´Ì¬ 
 
   case TRIGG_MODE:  Set_Param(Object, Value);             
                     break; 
@@ -257,14 +257,14 @@ u32 Get(u8 Object, u32 Value)
     
   case V_BATTERY:   return (ADC3_DR*1400)/1024;      // Battery voltage (mV)  
   
-  case VERTICAL:    return (u32)Y_ATTR;              // ´¹Ö±Í¨µÀÊôÐÔÖ¸Õë
+  case VERTICAL:    return (u32)Y_ATTR;              // ï¿½ï¿½Ö±Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
     
-  case HORIZONTAL:  return (u32)X_ATTR;              // Ë®Æ½Í¨µÀÊôÐÔÖ¸Õë
+  case HORIZONTAL:  return (u32)X_ATTR;              // Ë®Æ½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
     
-  case GLOBAL:      return (u32)G_ATTR;              // ÕûÌåÊôÐÔÖ¸Õë
+  case GLOBAL:      return (u32)G_ATTR;              // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
   
     
-  case TRIGGER:     return (u32)T_ATTR;              // ´¥·¢Í¨µÀÊôÐÔÖ¸Õë
+  case TRIGGER:     return (u32)T_ATTR;              // ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
     
   case FPGA_OK:     return FPGA_CFG_OK;              // FPGA config ok = 1
 
@@ -273,24 +273,24 @@ u32 Get(u8 Object, u32 Value)
   case DEVICEINFO:  Ptr=__DeviceVersion(DISK); 
                     if(Ptr[0]==0) return (u32)DiskDevInfo_2M; 
                     else return (u32)Ptr;
-  case DFUVER:      Ver = __Chk_DFU();               // DFU¹Ì¼þ°æ±¾ÐÅÏ¢
+  case DFUVER:      Ver = __Chk_DFU();               // DFUï¿½Ì¼ï¿½ï¿½æ±¾ï¿½ï¿½Ï¢
 //                    if(Ver == 0)  Ver = (u8*)DFU_Ver;
 //                    if(Value == 0) return (u32)Ver;
 //                    else return (Ver[0]-'0')*100 +(Ver[2]-'0')*10 +(Ver[3]-'0'); 
                     if((Ver[0] !='V') || (Ver==0))Ver = DFU_Ver;
                     return (u32)Ver;
                      
-  case HDWVER:      Ver = __Chk_HDW();               // Éè±¸Ó²¼þ°æ±¾ÐÅÏ¢
+  case HDWVER:      Ver = __Chk_HDW();               // ï¿½è±¸Ó²ï¿½ï¿½ï¿½æ±¾ï¿½ï¿½Ï¢
 //                    if(Ver == 0)  Ver = (u8*)(HDW_Ver + 13);
 //                    if(Value == 0) return (u32)Ver;
 //                    else return (Ver[0]-'0')*100 +(Ver[2]-'0')*10 +(Ver[3]-'0'); 
                     if(Ver == 0) Ver = HDW_Ver;
                     return (u32)Ver;
-  case SYSVER:      Ver = (u8*)SYS_Ver;              // SYS³ÌÐòÄ£¿é°æ±¾ÐÅÏ¢
+  case SYSVER:      Ver = (u8*)SYS_Ver;              // SYSï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½æ±¾ï¿½ï¿½Ï¢
                     if(Value == 0) return (u32)Ver;
                     else return (Ver[0]-'0')*100 +(Ver[2]-'0')*10 +(Ver[3]-'0'); 
   case FPGAVER:     FIFO_H_L_LOW();  
-                    Data = (*(vu16 *)0x64000000)>> 6; // FPGAÅäÖÃ³ÌÐò°æ±¾ÐÅÏ¢
+                    Data = (*(vu16 *)0x64000000)>> 6; // FPGAï¿½ï¿½ï¿½Ã³ï¿½ï¿½ï¿½æ±¾ï¿½ï¿½Ï¢
                     u16ToDec5(VerStr, Data);
                     VerStr[0]=VerStr[2]; VerStr[1]='.'; VerStr[2]=VerStr[3]; 
                     VerStr[3]=VerStr[4]; VerStr[4]= 0; 

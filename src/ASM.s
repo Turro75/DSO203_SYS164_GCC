@@ -335,15 +335,21 @@ Row_Fill_1:
     BX      LR
 
 Chk_DFU:
-    LDR     R3,  =0x0800002C
-    MOVS    R0,  #0x0000
+    MOV     R0,  #0x05
+    LDR     R3,  =0x08000034        //0x0800002C
     LDR     R3,  [R3]
-    BX      R3
-
+    CMP     R3,  #0x00
+    BNE     Chk_INFO
+    BX      LR
+    
 Chk_HDW:
-    LDR     R3,  =0x08000038
-    MOVS    R0,  #0x0000
+    MOV     R0,  #0x00              // SCH_VER
+    LDR     R3,  = 0x08000034       //0x08000038
     LDR     R3,  [R3]
+    CMP     R3,  #0x00
+    BNE     Chk_INFO
+    BX      LR
+Chk_INFO:    
     BX      R3
 
 Chk_SYS:

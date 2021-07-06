@@ -50,7 +50,6 @@ VPATH = src:src/stm32src:src/usbsrc
 $(NAME).HEX: $(NAME).elf
 	$(OBJCOPY) -O ihex $< $@
 	$(OBJCOPY) -O binary $< $(NAME)A.BIN
-	$(SIZE) $(NAME).elf
 
 $(NAME)A.BIN: $(NAME).elf
 	$(OBJCOPY) -O binary $< $@

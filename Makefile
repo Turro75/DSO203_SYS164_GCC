@@ -15,13 +15,13 @@ PARTS = Ident.o stm32f10x_nvic.o	USB_desc.o BIOS.o  \
 	USB_endp.o Config.o usb_init.o Ext_Flash.o usb_int.o stm32f10x_lib.o	usb_core.o\
 	FAT12.o USB_istr.o Function.o startup.o stm32f10x_dma.o usb_mem.o \
 	stm32f10x_spi.o USB_prop.o Interrupt.o stm32f10x_flash.o USB_pwr.o \
-	LCD.o stm32f10x_fsmc.o USB_regs.o Main.o stm32f10x_rcc.o stm32f10x_gpio.o USB_scsi.o \
-	Memory.o scsi_data.o USB_bot.o ASM.o cortexm3_macro.o core_cm3.o 
+	LCD.o stm32f10x_fsmc.o USB_regs.o Main.o  stm32f10x_rcc.o stm32f10x_gpio.o USB_scsi.o \
+	Memory.o scsi_data.o USB_bot.o ASM.o cortexm3_macro.o 
 
 
 DELIVERABLES = $(NAME).HEX $(NAME)A.BIN
 
-CFLAGS += -Iinc -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER  -Isrc
+CFLAGS += -Iinc -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER  -Iinc/usbinc -Iinc/stm32inc
 
 # Processor type
 CFLAGS += -mcpu=cortex-m3 -mthumb -mno-thumb-interwork
@@ -44,7 +44,7 @@ OBJCOPY = arm-none-eabi-objcopy
 SIZE    = arm-none-eabi-size
 
 # Tell make where to find transitional files:
-VPATH = src
+VPATH = src:src/stm32src:src/usbsrc
 
 # How to make .HEX files from .elf files:
 $(NAME).HEX: $(NAME).elf

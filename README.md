@@ -9,7 +9,7 @@ What is not working:
 
 - has the same bug in 8Mb handling of the stock SYS, but You can always patch it by Alterbios.
 
-Files created without Alterbios are not readable once Alterbios is activated, in case You remove Alterbios most of the files created when Alterbios were active won't be readable.
+Files created without Alterbios are not readable once Alterbios is activated, in case You remove Alterbios most of the files created when Alterbios was active won't be readable.
 
 Todo:
 - implementing alterbios patches in the code

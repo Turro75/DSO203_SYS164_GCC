@@ -80,70 +80,68 @@ void DMA_DeInit(DMA_Channel_TypeDef* DMAy_Channelx)
   /* Reset DMAy Channelx memory address register */
   DMAy_Channelx->CMAR = 0;
 
-  switch (*(u32*)&DMAy_Channelx)
+  if (DMAy_Channelx == ((DMA_Channel_TypeDef *) DMA1_Channel1_BASE))
   {
-    case DMA1_Channel1_BASE:
-      /* Reset interrupt pending bits for DMA1 Channel1 */
-      DMA1->IFCR |= DMA1_Channel1_IT_Mask;
-      break;
-
-    case DMA1_Channel2_BASE:
-      /* Reset interrupt pending bits for DMA1 Channel2 */
-      DMA1->IFCR |= DMA1_Channel2_IT_Mask;
-      break;
-
-    case DMA1_Channel3_BASE:
-      /* Reset interrupt pending bits for DMA1 Channel3 */
-      DMA1->IFCR |= DMA1_Channel3_IT_Mask;
-      break;
-
-    case DMA1_Channel4_BASE:
-      /* Reset interrupt pending bits for DMA1 Channel4 */
-      DMA1->IFCR |= DMA1_Channel4_IT_Mask;
-      break;
-
-    case DMA1_Channel5_BASE:
-      /* Reset interrupt pending bits for DMA1 Channel5 */
-      DMA1->IFCR |= DMA1_Channel5_IT_Mask;
-      break;
-
-    case DMA1_Channel6_BASE:
-      /* Reset interrupt pending bits for DMA1 Channel6 */
-      DMA1->IFCR |= DMA1_Channel6_IT_Mask;
-      break;
-
-    case DMA1_Channel7_BASE:
-      /* Reset interrupt pending bits for DMA1 Channel7 */
-      DMA1->IFCR |= DMA1_Channel7_IT_Mask;
-      break;
-
-    case DMA2_Channel1_BASE:
-      /* Reset interrupt pending bits for DMA2 Channel1 */
-      DMA2->IFCR |= DMA2_Channel1_IT_Mask;
-      break;
-
-    case DMA2_Channel2_BASE:
-      /* Reset interrupt pending bits for DMA2 Channel2 */
-      DMA2->IFCR |= DMA2_Channel2_IT_Mask;
-      break;
-
-    case DMA2_Channel3_BASE:
-      /* Reset interrupt pending bits for DMA2 Channel3 */
-      DMA2->IFCR |= DMA2_Channel3_IT_Mask;
-      break;
-
-    case DMA2_Channel4_BASE:
-      /* Reset interrupt pending bits for DMA2 Channel4 */
-      DMA2->IFCR |= DMA2_Channel4_IT_Mask;
-      break;
-
-    case DMA2_Channel5_BASE:
-      /* Reset interrupt pending bits for DMA2 Channel5 */
+    /* Reset interrupt pending bits for DMA1 Channel1 */
+    DMA1->IFCR |= DMA1_Channel1_IT_Mask;
+  }
+  else if (DMAy_Channelx == ((DMA_Channel_TypeDef *) DMA1_Channel2_BASE))
+  {
+    /* Reset interrupt pending bits for DMA1 Channel2 */
+    DMA1->IFCR |= DMA1_Channel2_IT_Mask;
+  }
+  else if (DMAy_Channelx == ((DMA_Channel_TypeDef *) DMA1_Channel3_BASE))
+  {
+    /* Reset interrupt pending bits for DMA1 Channel3 */
+    DMA1->IFCR |= DMA1_Channel3_IT_Mask;
+  }
+  else if (DMAy_Channelx == ((DMA_Channel_TypeDef *) DMA1_Channel4_BASE))
+  {
+    /* Reset interrupt pending bits for DMA1 Channel4 */
+    DMA1->IFCR |= DMA1_Channel4_IT_Mask;
+  }
+  else if (DMAy_Channelx == ((DMA_Channel_TypeDef *) DMA1_Channel5_BASE))
+  {
+    /* Reset interrupt pending bits for DMA1 Channel5 */
+    DMA1->IFCR |= DMA1_Channel5_IT_Mask;
+  }
+  else if (DMAy_Channelx == ((DMA_Channel_TypeDef *) DMA1_Channel6_BASE))
+  {
+    /* Reset interrupt pending bits for DMA1 Channel6 */
+    DMA1->IFCR |= DMA1_Channel6_IT_Mask;
+  }
+  else if (DMAy_Channelx == ((DMA_Channel_TypeDef *) DMA1_Channel7_BASE))
+  {
+    /* Reset interrupt pending bits for DMA1 Channel7 */
+    DMA1->IFCR |= DMA1_Channel7_IT_Mask;
+  }
+  else if (DMAy_Channelx == ((DMA_Channel_TypeDef *) DMA2_Channel1_BASE))
+  {
+    /* Reset interrupt pending bits for DMA2 Channel1 */
+    DMA2->IFCR |= DMA2_Channel1_IT_Mask;
+  }
+  else if (DMAy_Channelx == ((DMA_Channel_TypeDef *) DMA2_Channel2_BASE))
+  {
+    /* Reset interrupt pending bits for DMA2 Channel2 */
+    DMA2->IFCR |= DMA2_Channel2_IT_Mask;
+  }
+  else if (DMAy_Channelx == ((DMA_Channel_TypeDef *) DMA2_Channel3_BASE))
+  {
+    /* Reset interrupt pending bits for DMA2 Channel3 */
+    DMA2->IFCR |= DMA2_Channel3_IT_Mask;
+  }
+  else if (DMAy_Channelx == ((DMA_Channel_TypeDef *) DMA2_Channel4_BASE))
+  {
+    /* Reset i)nterrupt pending bits for DMA2 Channel4 */
+    DMA2->IFCR |= DMA2_Channel4_IT_Mask;
+  }
+  else
+  { 
+    if (DMAy_Channelx == ((DMA_Channel_TypeDef *) DMA2_Channel5_BASE))
+    {
+      /* Res)et interrupt pending bits for DMA2 Channel5 */
       DMA2->IFCR |= DMA2_Channel5_IT_Mask;
-      break;
-      
-    default:
-      break;
+    }
   }
 }
 
@@ -601,7 +599,7 @@ ITStatus DMA_GetITStatus(u32 DMA_IT)
 
 /*******************************************************************************
 * Function Name  : DMA_ClearITPendingBit
-* Description    : Clears the DMAy Channelx’s interrupt pending bits.
+* Description    : Clears the DMAy Channelxï¿½s interrupt pending bits.
 * Input          : - DMA_IT: specifies the DMA interrupt pending bit to clear.
 *                    This parameter can be any combination (for the same DMA) of
 *                    the following values:

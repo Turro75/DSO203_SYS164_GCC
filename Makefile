@@ -19,7 +19,7 @@ PARTS = Ident.o stm32f10x_nvic.o	USB_desc.o BIOS.o  \
 	Memory.o scsi_data.o USB_bot.o ASM.o cortexm3_macro.o 
 
 
-DELIVERABLES = $(NAME).HEX $(NAME)A.BIN
+DELIVERABLES = $(NAME).HEX $(NAME)A.BIN ALT_$(NAME).HEX
 
 CFLAGS += -Iinc -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER  -Iinc/usbinc -Iinc/stm32inc
 
@@ -46,13 +46,19 @@ SIZE    = arm-none-eabi-size
 # Tell make where to find transitional files:
 VPATH = src:src/stm32src:src/usbsrc
 
+.PHONY: default
+default: all ;
+
 # How to make .HEX files from .elf files:
 $(NAME).HEX: $(NAME).elf
 	$(OBJCOPY) -O ihex $< $@
-	$(OBJCOPY) -O binary $< $(NAME)A.BIN
 
 $(NAME)A.BIN: $(NAME).elf
 	$(OBJCOPY) -O binary $< $@
+	echo 0x08004000 > $(NAME)A.ADR 
+
+A$(NAME).HEX: $(NAME).HEX  $(NAME)A.BIN
+	make -C alterbios
 
 $(NAME).elf: SYS.lds $(PARTS)
 	$(CC) $(CFLAGS) -o $@ $(PARTS) $(LFLAGS) $(LIBS) -T $<
@@ -68,5 +74,11 @@ all: $(DELIVERABLES) $(NAME).elf
 	$(SIZE) $(NAME).elf
 
 clean:
-	rm -f $(DELIVERABLES) $(NAME).elf $(NAME).map $(PARTS)
+	make -C alterbios clean
+	rm -f $(DELIVERABLES) $(NAME).elf $(NAME).map $(PARTS) $(NAME)A.ADR
+	
+loadalter:	A$(NAME).HEX
+	sudo ./dfuload.sh A$(NAME)
 
+load:	$(NAME).HEX $(NAME)A.BIN
+	sudo ./dfuload.sh $(NAME)

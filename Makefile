@@ -1,7 +1,7 @@
 
 NAME = SYSGCC
 
-OUTDIR=build/
+OUTDIR=build
 #PARTS += core_cm3.o
 #PARTS += misc.o stm32f10x_dma.o stm32f10x_gpio.o stm32f10x_rcc.o stm32f10x_tim.o stm32f10x_adc.o stm32f10x_usart.o stm32f10x_dac.o stm32f10x_flash.o stm32f10x_fsmc.o stm32f10x_spi.o
 #PARTS += USB_core.o USB_init.o USB_int.o USB_mem.o USB_regs.o
@@ -11,12 +11,23 @@ OUTDIR=build/
 #  scsi_data.o USB_desc.o USB_istr.o USB_pwr.o serial.o
 #PARTS += startup.o
 
-PARTS = Ident.o stm32f10x_nvic.o	USB_desc.o BIOS.o  \
-	USB_endp.o Config.o usb_init.o Ext_Flash.o usb_int.o stm32f10x_lib.o	usb_core.o\
-	FAT12.o USB_istr.o Function.o startup.o stm32f10x_dma.o usb_mem.o \
-	stm32f10x_spi.o USB_prop.o Interrupt.o stm32f10x_flash.o USB_pwr.o \
-	LCD.o stm32f10x_fsmc.o USB_regs.o Main.o  stm32f10x_rcc.o stm32f10x_gpio.o USB_scsi.o \
-	Memory.o scsi_data.o USB_bot.o ASM.o cortexm3_macro.o 
+CPARTS = Main.o Ident.o  BIOS.o Config.o Ext_Flash.o Interrupt.o 	\
+	FAT12.o  Function.o startup.o LCD.o  \
+	stm32f10x_lib.o stm32f10x_spi.o stm32f10x_flash.o  \
+	stm32f10x_nvic.o stm32f10x_dma.o stm32f10x_fsmc.o stm32f10x_rcc.o stm32f10x_gpio.o  \
+	Memory.o USB_scsi.o usb_int.o USB_pwr.o usb_init.o USB_endp.o USB_istr.o \
+	usb_core.o USB_prop.o usb_mem.o scsi_data.o USB_regs.o USB_desc.o USB_bot.o 
+
+SPARTS = ASM.o cortexm3_macro.o
+
+BASENAME = $(basename $(CPARTS))
+CSRCS = $(addsuffix .c , $(BASENAME))
+COBJS = $(addprefix $(OUTDIR)/, $(CPARTS) )
+
+BASENAME = $(basename $(SPARTS))
+SSRCS = $(addsuffix .s , $(BASENAME))
+SOBJS = $(addprefix $(OUTDIR)/, $(SPARTS) )
+
 
 
 DELIVERABLES = $(NAME).HEX $(NAME)A.BIN
@@ -47,26 +58,33 @@ SIZE    = arm-none-eabi-size
 VPATH = src:src/stm32src:src/usbsrc
 
 # How to make .HEX files from .elf files:
-$(NAME).HEX: $(NAME).elf
+$(NAME).HEX:  $(NAME).elf 
 	$(OBJCOPY) -O ihex $< $@
-	$(OBJCOPY) -O binary $< $(NAME)A.BIN
+
+.PHONY: default
+default: all ;
+
+
+build:	
+	mkdir build
 
 $(NAME)A.BIN: $(NAME).elf
+	echo 0x08004000 > $(NAME)A.ADR
 	$(OBJCOPY) -O binary $< $@
 
-$(NAME).elf: SYS.lds $(PARTS)
-	$(CC) $(CFLAGS) -o $@ $(PARTS) $(LFLAGS) $(LIBS) -T $<
+$(NAME).elf: SYS.lds $(COBJS) $(SOBJS)
+	$(CC) $(CFLAGS) -o $@ $(COBJS) $(SOBJS) $(LFLAGS) $(LIBS) -T $<
 
 # Rebuild all parts if any header or the Makefile changes:
-.c.o: *.h Makefile
-	$(CC) $(CFLAGS) -c -o $@ $<
+build/%.o: %.c build
+	$(CC) $(CFLAGS) -c -o $(@) $<
 
-.s.o:
-	$(CC) $(AFLAGS) -c -o $@ $<
+build/%.o: %.s build
+	$(CC) $(AFLAGS) -c -o $(@) $<
 
 all: $(DELIVERABLES) $(NAME).elf
 	$(SIZE) $(NAME).elf
 
 clean:
-	rm -f $(DELIVERABLES) $(NAME).elf $(NAME).map $(PARTS)
+	rm -fR build $(NAME)* 
 

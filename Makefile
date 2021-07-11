@@ -19,7 +19,7 @@ PARTS = Ident.o stm32f10x_nvic.o	USB_desc.o BIOS.o  \
 	Memory.o scsi_data.o USB_bot.o ASM.o cortexm3_macro.o 
 
 
-DELIVERABLES = $(NAME).HEX $(NAME)A.BIN ALT_$(NAME).HEX
+DELIVERABLES = $(NAME).HEX $(NAME)A.BIN A$(NAME).HEX A$(NAME)A.BIN
 
 CFLAGS += -Iinc -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER  -Iinc/usbinc -Iinc/stm32inc
 

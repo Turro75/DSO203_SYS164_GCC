@@ -5,9 +5,7 @@ tested only on DSO203 v2.72 8Mb.
 
 What is not working:
 
-/_- cannot be patched by alterbios _/ FIXED
-
-- has the same bug in 8Mb handling of the stock SYS, but You can always patch it by Alterbios.
+- has the same bug in 8Mb handling on 2.72 hw of the stock SYS, but You can always patch it by Alterbios.
 
 Files created without Alterbios are not readable once Alterbios is activated, in case You remove Alterbios most of the files created when Alterbios was active won't be readable.
 

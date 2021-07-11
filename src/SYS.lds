@@ -21,7 +21,7 @@ SECTIONS
         _isr_vectors_offs = . ;
         KEEP(*(.isr_vectors))            /* Startup code */
         . = 0x200;
-        ASM.o  
+        build/ASM.o  
     } >rom
  
  

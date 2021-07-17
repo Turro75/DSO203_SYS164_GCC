@@ -80,37 +80,37 @@ void alterbios_init()
 
 typedef int (*func_t)();
 
-// __GetDev_SN() is called by SYS as part of the bootup sequence.
-// We patch it to initialize AlterBIOS.
-// int patch_GetDev_SN()
-// {
-//     // Only when called during boot, as detected by GPIO config status
-//     // if (GPIOA->CRH == 0x88833BBB)
-//     // {
-//     //     alterbios_init();
-//     // }
-//    //try to see if returning a fixed serial number allows license skip
-//     //Sn: 8726B9A3 lic: 7A9457A7
-//     //return 0x8726B9A3;
-//     // Return the real serial number
-//     return ((func_t)*(uint32_t*)0x08000020)();
-// }
-
-int patch_Chk_SYS(u32 Licence)
+//__GetDev_SN() is called by SYS as part of the bootup sequence.
+//We patch it to initialize AlterBIOS.
+int patch_GetDev_SN()
 {
     // Only when called during boot, as detected by GPIO config status
     if (GPIOA->CRH == 0x88833BBB)
-    //if (myflag == 0)
     {
-        
         alterbios_init();
     }
    //try to see if returning a fixed serial number allows license skip
-    //this is valid for Sn: 8726B9A3 lic: 7A9457A7
+    //Sn: 8726B9A3 lic: 7A9457A7
+    //return 0x8726B9A3;
     // Return the real serial number
-    return ((func_t)*(uint32_t*)0x08000028)(Licence);
-    //return 1;    
+    return ((func_t)*(uint32_t*)0x08000020)();
 }
+
+// int patch_Chk_SYS(u32 Licence)
+// {
+//     // Only when called during boot, as detected by GPIO config status
+//     if (GPIOA->CRH == 0x88833BBB)
+//     //if (myflag == 0)
+//     {
+        
+//         alterbios_init();
+//     }
+//    //try to see if returning a fixed serial number allows license skip
+//     //this is valid for Sn: 8726B9A3 lic: 7A9457A7
+//     // Return the real serial number
+//     return ((func_t)*(uint32_t*)0x08000028)(Licence);
+//     //return 1;    
+// }
 
 
 static void fix_filename(const u8 *orig, char dest[14])

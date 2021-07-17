@@ -10,13 +10,13 @@
 
     .text
 
-    @ __GetDev_SN
-    @ .org 0x023c
-    @ b.w ALTERBIOS_BASE + 1 + 4 * 5
+    @__GetDev_SN
+     .org 0x023c
+     b.w ALTERBIOS_BASE + 1 + 4 * 5
 
     @ __Chk_SYS
-    .org 0x0240
-    b.w ALTERBIOS_BASE + 1 + 4 * 5
+    @.org 0x0240
+    @b.w ALTERBIOS_BASE + 1 + 4 * 5
 
     @ __OpenFileWr
     .org 0x0288

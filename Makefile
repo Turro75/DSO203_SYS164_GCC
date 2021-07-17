@@ -75,7 +75,7 @@ all: $(DELIVERABLES) $(NAME).elf
 
 clean:
 	make -C alterbios clean
-	rm -f $(DELIVERABLES) $(NAME).elf $(NAME).map $(PARTS) $(NAME)A.ADR
+	rm -Rf $(DELIVERABLES) build $(NAME).elf $(NAME).map $(PARTS) $(NAME)A.ADR
 	
 loadalter:	A$(NAME).HEX
 	sudo ./dfuload.sh A$(NAME)

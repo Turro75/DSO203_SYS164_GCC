@@ -22,6 +22,8 @@ SECTIONS
         KEEP(*(.isr_vectors))            /* Startup code */
         . = 0x200;
         build/ASM.o  
+        . = 0x400;
+        build/alterbios.o
     } >rom
  
  

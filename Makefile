@@ -16,9 +16,10 @@ CPARTS = Main.o Ident.o  BIOS.o Config.o Ext_Flash.o Interrupt.o 	\
 	stm32f10x_lib.o stm32f10x_spi.o stm32f10x_flash.o  \
 	stm32f10x_nvic.o stm32f10x_dma.o stm32f10x_fsmc.o stm32f10x_rcc.o stm32f10x_gpio.o  \
 	Memory.o USB_scsi.o usb_int.o USB_pwr.o usb_init.o USB_endp.o USB_istr.o \
-	usb_core.o USB_prop.o usb_mem.o scsi_data.o USB_regs.o USB_desc.o USB_bot.o 
+	usb_core.o USB_prop.o usb_mem.o scsi_data.o USB_regs.o USB_desc.o USB_bot.o \
+	__alterbios.o fatfs_glue.o ff.o
 
-SPARTS = ASM.o cortexm3_macro.o
+SPARTS = ASM.o cortexm3_macro.o alterbios.o
 
 BASENAME = $(basename $(CPARTS))
 CSRCS = $(addsuffix .c , $(BASENAME))
@@ -32,7 +33,7 @@ SOBJS = $(addprefix $(OUTDIR)/, $(SPARTS) )
 
 DELIVERABLES = $(NAME).HEX $(NAME)A.BIN
 
-CFLAGS += -Iinc -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER  -Iinc/usbinc -Iinc/stm32inc
+CFLAGS += -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER  -Iinc  -Iinc/usbinc -Iinc/stm32inc -Iinc/alterbiosinc
 
 # Processor type
 CFLAGS += -mcpu=cortex-m3 -mthumb -mno-thumb-interwork
@@ -41,7 +42,7 @@ CFLAGS += -mcpu=cortex-m3 -mthumb -mno-thumb-interwork
 CFLAGS += -fno-common -Os -std=gnu99 -ffunction-sections
 
 # Compiler warnings
-CFLAGS += -Wall -Wno-unused -Wno-error
+CFLAGS += -Wall -Wno-unused -Wno-error -Wno-int-to-pointer-cast
 
 # Default linker arguments (disables GCC-provided startup.c, creates .map file)
 LFLAGS += -mthumb -march=armv7 -mfix-cortex-m3-ldrd -nostartfiles -Wl,-Map=$(NAME).map -eReset_Handler -Wl,-gc-sections
@@ -55,7 +56,7 @@ OBJCOPY = arm-none-eabi-objcopy
 SIZE    = arm-none-eabi-size
 
 # Tell make where to find transitional files:
-VPATH = src:src/stm32src:src/usbsrc
+VPATH = src:src/stm32src:src/usbsrc:src/alterbiossrc
 
 # How to make .HEX files from .elf files:
 $(NAME).HEX:  $(NAME).elf 

@@ -139,8 +139,8 @@ __Input_Lic:
 .globl __Dev_SN
 .thumb_func
 __Dev_SN:
-    B    Dev_SN
-    B    Dev_SN
+    B.W    __patch_GetDev_SN
+    @B    Dev_SN
 //===============================================================================
 // u8 __Chk_SYS(u32 Licence)   Check SYS licence            RET: 1 = licence ok
 //-------------------------------------------------------------------------------
@@ -278,35 +278,35 @@ __Chk_HDW:
 .globl __OpenFileWr
 .thumb_func
 __OpenFileWr:
-    B.W    OpenFileWr
+    B.W    __patch_OpenFileWr
 //===============================================================================
 // u8 OpenFileRd(u8* Buffer, u8* FileName, u16* Cluster, u32* pDirAddr);
 //-------------------------------------------------------------------------------
 .globl __OpenFileRd
 .thumb_func
 __OpenFileRd:
-    B.W    OpenFileRd
+    B.W    __patch_OpenFileRd
 //===============================================================================
 // u8 ReadFileSec(u8* Buffer, u16* Cluster);
 //-------------------------------------------------------------------------------
 .globl __ReadFileSec
 .thumb_func
 __ReadFileSec:
-    B.W    ReadFileSec
+    B.W    __patch_ReadFileSec
 //===============================================================================
 // u8 ProgFileSec(u8* Buffer, u16* Cluster);
 //-------------------------------------------------------------------------------
 .globl __ProgFileSec
 .thumb_func
 __ProgFileSec:
-    B.W    ProgFileSec
+    B.W   __patch_ProgFileSec
 //===============================================================================
 // u8 CloseFile(u8* Buffer, u32 Lenght, u16* Cluster, u32* pDirAddr);
 //-------------------------------------------------------------------------------
 .globl __CloseFile
 .thumb_func
 __CloseFile:
-    B.W    CloseFile
+    B.W    __patch_CloseFile
 //===============================================================================
 // void __Row_Fill(uc16 *S_Buffer,u16 *T_Buffer) Fill one row base data to buffer
 //-------------------------------------------------------------------------------

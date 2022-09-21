@@ -6,7 +6,7 @@
 #include "LCD.h"
 #include "stm32f10x_map.h"
 
-#define VERSION "NEW AlterBIOS 0.6" 
+#define VERSION "      NEW AlterBIOS 0.6" 
 
 #define RGB(r, g, b) (((r)>>3)|(((g)>>2)<<5)|(((b)>>3)<<11))
 extern FATFS fatfs;

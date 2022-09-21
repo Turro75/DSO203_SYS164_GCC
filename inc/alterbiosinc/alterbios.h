@@ -7,8 +7,10 @@
 
 typedef int (*func_t)();
 
-void __alterbios_init();
+void __alterbios_init(void);
 void Alt_Init_Data(void);
+
+extern void alterbios_init(void);
 
 u32 __patch_GetDev_SN(void);
 u8 __patch_OpenFileWr(u8 *buffer, u8 *filename, u16 *cluster, u32 *diraddr);

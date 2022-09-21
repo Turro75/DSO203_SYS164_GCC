@@ -1,7 +1,10 @@
 # DSO203_SYS164_GCC
 
 Port to GCC of SYS ver 1.64 of DSO203.
-tested only on DSO203 v2.72 8Mb.
+
+base on the initial work of https://github.com/neilstockbridge/dsoquad-BIOS
+
+tested only on DSO203 v2.72 8Mb and v2.82.
 
 What is not working:
 
@@ -14,11 +17,11 @@ Files created without Alterbios are not readable once Alterbios is activated, in
 Todo:
 
 - implementing alterbios patches in the code -> Use the insertAlterbios branch or download SYSGCCA.zip in the relases
+
 - check and assign a license.
-- write credits at the end of the readme.
 
 Compiled by arm-none-eabi-gcc 9.2.1 system arm compiler available in ubuntu 21.04
-It seems only this version of gcc is able to produce a running binary even on windows, I'll investigate later.
+It seems only this version of gcc is able to produce a running binary (even on windows), I'll investigate later.
 
 to compile do a
 make clean all

@@ -12,13 +12,21 @@ What is not working:
 Files created without Alterbios are not readable once Alterbios is activated, in case You remove Alterbios most of the files created when Alterbios was active won't be readable.
 
 Todo:
-- implementing alterbios patches in the code
+
+- implementing alterbios patches in the code -> Use the insertAlterbios branch or download SYSGCCA.zip in the relases
 - check and assign a license.
 - write credits at the end of the readme.
 
 Compiled by arm-none-eabi-gcc 9.2.1 system arm compiler available in ubuntu 21.04
+It seems only this version of gcc is able to produce a running binary even on windows, I'll investigate later.
 
-to compile do a 
+to compile do a
 make clean all
 
 this produces a SYSGCC.HEX and SYSGCC.BIN which can be uploaded through dfu as any other SYS file.
+
+Binaries available in releases:
+SYSGCC is the SYS_B164 ported and compiled by gcc
+SYSGCCA is the Alterbios patched version.
+
+Both have been tested on DSO203 HW2.72 and HW2.82

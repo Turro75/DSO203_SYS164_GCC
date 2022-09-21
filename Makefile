@@ -49,11 +49,15 @@ LFLAGS += -mthumb -march=armv7 -mfix-cortex-m3-ldrd -nostartfiles -Wl,-Map=$(NAM
 
 AFLAGS = -mcpu=cortex-m3
 
+GCCPATH = /home/turro/.arduino15/packages/arduino/tools/arm-none-eabi-gcc/7-2017q4/bin
+GCCPATH = /home/turro/.arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/bin
+#GCCPATH = /usr/bin
+GCCPATH = /home/turro/tools/gcc-arm-9.2-2019.12-x86_64-arm-none-eabi/bin
 
 # Names of the toolchain programs
-CC      = arm-none-eabi-gcc
-OBJCOPY = arm-none-eabi-objcopy
-SIZE    = arm-none-eabi-size
+CC      = $(GCCPATH)/arm-none-eabi-gcc
+OBJCOPY = $(GCCPATH)/arm-none-eabi-objcopy
+SIZE    = $(GCCPATH)/arm-none-eabi-size
 
 # Tell make where to find transitional files:
 VPATH = src:src/stm32src:src/usbsrc:src/alterbiossrc
